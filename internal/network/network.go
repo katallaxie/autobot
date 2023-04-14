@@ -89,7 +89,7 @@ func CreateNetwork(locale string, rate float64, input, output Matrix, hiddensNod
 
 // Save saves the neural network in a specified file which can be retrieved with LoadNetwork
 func (network Network) Save(fileName string) {
-	outF, err := os.OpenFile(filepath.Clean(fileName), os.O_CREATE|os.O_RDWR, 0600)
+	outF, err := os.OpenFile(filepath.Clean(fileName), os.O_CREATE|os.O_RDWR, 0o600)
 	if err != nil {
 		panic("Failed to save the network to " + fileName + ".")
 	}

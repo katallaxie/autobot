@@ -6,8 +6,7 @@ package tools
 import (
 	_ "github.com/golang/mock/mockgen/model"
 	_ "github.com/golangci/golangci-lint/cmd/golangci-lint"
-	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway"
-	_ "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
-	_ "google.golang.org/protobuf/cmd/protoc-gen-go"
+	_ "github.com/goreleaser/goreleaser"
+	_ "gotest.tools/gotestsum"
 	_ "mvdan.cc/gofumpt"
 )

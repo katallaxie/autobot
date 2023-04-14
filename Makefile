@@ -1,47 +1,49 @@
-DIR ?= $(shell pwd)
-PROTOBUF_API ?= $(DIR)/pkg/proto/v1
+.DEFAULT_GOAL := build
+
+GO ?= go
+GO_RUN_TOOLS ?= $(GO) run -modfile ./tools/go.mod
+GO_TEST = $(GO_RUN_TOOLS) gotest.tools/gotestsum --format pkgname
+GO_RELEASER ?= $(GO_RUN_TOOLS) github.com/goreleaser/goreleaser
+GO_MOD ?= $(shell ${GO} list -m)
+
+# Module name
+MODULE_NAME ?= github.com/katallaxie/autobot
+
+.PHONY: build
+build: ## Build the binary file.
+	$(GO_RELEASER) build --snapshot --rm-dist
 
 .PHONY: generate
-generate: proto
-generate:
-	@go generate ./...
+generate: ## Generate code.
+	$(GO) generate ./...
 
 .PHONY: fmt
 fmt: ## Run go fmt against code.
-	@go run mvdan.cc/gofumpt -w .
+	$(GO_RUN_TOOLS) mvdan.cc/gofumpt -w .
 
 .PHONY: vet
 vet: ## Run go vet against code.
-	@go vet ./...
-
-.PHONY: build
-build:
-	@goreleaser build --rm-dist --snapshot
+	$(GO) vet ./...
 
 .PHONY: test
-test:
-	@go test -race ./... -count=1 -cover -coverprofile cover.out
+test: fmt vet ## Run tests.
+	mkdir -p .test/reports
+	$(GO_TEST) --junitfile .test/reports/unit-test.xml -- -race ./... -count=1 -short -cover -coverprofile .test/reports/unit-test-coverage.out
 
-.PHONY: run-scylla
-run-scylla:
-	@docker pull scylladb/scylla
-	@docker run --name scylla -p 9042:9042 --privileged --memory 1G --rm -d scylladb/scylla
-	@until docker exec scylla cqlsh -e "DESCRIBE SCHEMA"; do sleep 2; done
+.PHONY: lint
+lint: ## Run lint.
+	$(GO_RUN_TOOLS) github.com/golangci/golangci-lint/cmd/golangci-lint run --timeout 5m -c .golangci.yml
 
-download:
-	@go mod download
+.PHONY: clean
+clean: ## Remove previous build.
+	rm -rf .test .dist
+	find . -type f -name '*.gen.go' -exec rm {} +
+	git checkout go.mod
 
-install-tools: download
-	@cat internal/tools/tools.go | grep _ | awk -F'"' '{print $$2}' | xargs -tI % go install %
-
-.PHONY: stop-scylla
-stop-scylla:
-	@docker stop scylla
-
-.PHONY: install
-install:
-	@go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-	@go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+.PHONY: setup
+setup: ##
+	$(GO) mod edit -module $(MODULE_NAME)
+	find . -type f -name '*.go' -exec sed -i -e 's,${GO_MOD},${MODULE_NAME},g' {} \;
 
 .PHONY: proto
 proto: ## generates protobuf

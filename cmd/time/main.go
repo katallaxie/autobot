@@ -38,7 +38,6 @@ func main() {
 		plugin.WithFilters(filters),
 		plugin.WithID("autobot.plugin.time-now"),
 	)
-
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -105,7 +105,6 @@ func (s *service) Start(ctx context.Context, ready srv.ReadyFunc, run srv.RunFun
 		})
 
 		app.Get("/auth/callback", func(c *fiber.Ctx) error {
-
 			code := c.FormValue("code")
 			token, err := s.config.Exchange(c.Context(), code)
 			if err != nil {

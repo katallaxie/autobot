@@ -31,14 +31,12 @@ func init() {
 	RootCommand.SilenceUsage = true
 }
 
-var (
-	RootCommand = &cobra.Command{
-		Use: "train",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return rootCommand(cmd.Context())
-		},
-	}
-)
+var RootCommand = &cobra.Command{
+	Use: "train",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return rootCommand(cmd.Context())
+	},
+}
 
 func rootCommand(_ context.Context) error {
 	cwd, err := os.Getwd()

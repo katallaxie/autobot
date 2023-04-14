@@ -5,7 +5,7 @@ run:
   - "zz_generated\\..+\\.go$"
 
   skip-dirs:
-    - vendor
+    - vendor$
 
 output:
   # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
@@ -45,7 +45,7 @@ linters-settings:
 
   gocyclo:
     # minimal code complexity to report, 30 by default (but we recommend 10-20)
-    min-complexity: 20
+    min-complexity: 10
 
   maligned:
     # print struct with more effective memory layout or not, false by default
@@ -104,7 +104,7 @@ linters-settings:
         paramsOnly: true
       rangeValCopy:
         sizeThreshold: 32
-  
+
   revive:
     severity: warning
     confidence: 0.8
@@ -152,7 +152,7 @@ issues:
         - gosec
         - unparam
         - deadcode
-    
+
     # Ease some gocritic warnings on test files.
     - path: _test\.go
       text: "(unnamedResult|exitAfterDefer)"
@@ -189,14 +189,6 @@ issues:
       linters:
       - gosec
       - gas
-    
-    - text: "G404"
-      linters:
-      - gosec
-
-    - text: "G204"
-      linters:
-      - gosec
 
   # Independently from option `exclude` we use default exclude patterns,
   # it can be disabled by this option. To list all

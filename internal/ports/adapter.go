@@ -25,8 +25,7 @@ type PublishRequest struct {
 }
 
 // PublishResponse ...
-type PublishResponse struct {
-}
+type PublishResponse struct{}
 
 // MessageStore ...
 type MessageStore interface {

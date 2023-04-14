@@ -70,8 +70,7 @@ func (m *MessageController) replyCommands(ctx context.Context, e *pb.Event) (*pb
 
 //nolint:unparam
 func (m *MessageController) replyMentioned(_ context.Context, e *pb.Event, cache *gocache.Cache) (*pb.Reply, error) {
-	_, responseSentence :=
-		m.analyzer.Analyze("en", e.GetMentioned().GetMessage().GetTextMessage().GetText()).Calculate(*cache, m.nn["en"], "demo", 0.004)
+	_, responseSentence := m.analyzer.Analyze("en", e.GetMentioned().GetMessage().GetTextMessage().GetText()).Calculate(*cache, m.nn["en"], "demo", 0.004)
 
 	reply := &pb.Reply{
 		Room: &pb.Room{

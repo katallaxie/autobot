@@ -33,14 +33,12 @@ type flags struct {
 
 var f = &flags{}
 
-var (
-	RootCommand = &cobra.Command{
-		Use: "autobot",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return run(cmd.Context())
-		},
-	}
-)
+var RootCommand = &cobra.Command{
+	Use: "autobot",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return run(cmd.Context())
+	},
+}
 
 func init() {
 	cobra.OnInitialize(initConfig)

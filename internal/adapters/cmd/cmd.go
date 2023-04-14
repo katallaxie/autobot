@@ -9,8 +9,10 @@ import (
 	pb "github.com/katallaxie/autobot/pkg/proto/v1"
 )
 
-var registry = map[int32]ports.Command{}
-var registerSync sync.Mutex
+var (
+	registry     = map[int32]ports.Command{}
+	registerSync sync.Mutex
+)
 
 // Register ...
 func Register(id int32, cmd ports.Command) {
