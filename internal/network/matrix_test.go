@@ -1,13 +1,11 @@
 package network
 
 import (
-	"math/rand"
 	"reflect"
 	"testing"
 )
 
 func TestRandomMatrix(t *testing.T) {
-	rand.Seed(0)
 	random := RandomMatrix(2, 2)
 	excepted := Matrix{
 		{0.8903922985882329, -0.5100698294124405},

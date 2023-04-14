@@ -120,7 +120,6 @@ func RandomizeResponse(locale, entry, tag, token string) (string, string) {
 		// Choose a random response in intents
 		response := intent.Responses[0]
 		if len(intent.Responses) > 1 {
-			rand.Seed(time.Now().UnixNano())
 			response = intent.Responses[rand.Intn(len(intent.Responses))]
 		}
 
