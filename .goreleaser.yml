@@ -1,0 +1,82 @@
+project_name: autobot
+
+env:
+  - CGO_ENABLED=0
+  - GO111MODULE=on
+
+builds:
+  -
+    id: autobot
+    binary: autobot-{{.Os}}-{{.Arch}}
+    main: cmd/autobot/main.go
+    ldflags:
+      - -s -w
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ignore:
+      - goos: darwin
+        goarch: 386
+    no_unique_dist_dir: true
+
+  -
+    id: autobot-hangouts
+    binary: autobot-hangouts-{{.Os}}-{{.Arch}}
+    main: cmd/hangouts/main.go
+    ldflags:
+      - -s -w
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    env:
+      - CGO_ENABLED=0
+    ignore:
+      - goos: darwin
+        goarch: 386
+    no_unique_dist_dir: true
+
+archives:
+  -
+    id: autobot
+    builds:
+      - autobot
+
+dockers:
+  - dockerfile: Dockerfile
+    goos: linux
+    goarch: amd64
+    ids:
+      - autobot
+      - autobot-hangouts
+    image_templates:
+      - "ghcr.io/katallaxie/{{ .ProjectName }}/{{ .ProjectName }}:{{ .Version }}"
+      - "ghcr.io/katallaxie/{{ .ProjectName }}/{{ .ProjectName }}:{{.Tag}}"
+      - "ghcr.io/katallaxie/{{ .ProjectName }}/{{ .ProjectName }}:latest"
+      - "harbor.infra.cluster.ionos.com/paasis/{{.ProjectName}}:latest"
+      - "harbor.infra.cluster.ionos.com/paasis/{{.ProjectName}}:{{.Tag}}"
+      - "harbor.infra.cluster.ionos.com/paasis/{{.ProjectName}}"
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
+release:
+  draft: false
+
+snapshot:
+  name_template: "{{.Tag}}"
+
+checksum:
+  name_template: "autobot_checksums.txt"

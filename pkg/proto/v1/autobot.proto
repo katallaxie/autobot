@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package autobot.events.v1;
+
+option go_package = "github.com/katallaxie/autobot/pkg/proto;proto";
+
+// Event ...
+message Event {
+    oneof event {
+        Added added         = 1;
+        Removed removed     = 2;
+        Mentioned mentioned = 3;
+        Command command     = 4;
+    }
+}
+
+// Reply ...
+message Reply {
+    Room room               = 1;
+
+    oneof reply {
+        Message message     = 2;
+    }
+}
+
+// Command ...
+message Command {
+    int32 id                    = 1;
+    string name                 = 2;
+    repeated string arguments   = 3;
+    string raw_argument         = 4;
+
+    Room room                   = 5;
+    User User                   = 6;
+    Message message             = 7;
+
+    google.protobuf.Timestamp timestamp = 10;
+}
+
+// Mentioned ...
+message Mentioned {
+    Room room           = 1;
+    User User           = 2;
+    Message message     = 3;
+
+    google.protobuf.Timestamp timestamp = 10;
+}
+
+// Added ...
+message Added {
+    Room room           = 1;
+    User User           = 2;
+    Message message     = 3;
+
+    google.protobuf.Timestamp timestamp = 10;
+}
+
+// Removed ...
+message Removed {
+    Room room           = 1;
+    User User           = 2;
+    Message message     = 3;
+
+    google.protobuf.Timestamp timestamp = 10;
+}
+
+// Room ...
+message Room {
+    string name             = 1;
+    string display_name     = 2;
+}
+
+// User ...
+message User {
+    string name         = 1;
+    string email        = 2;
+    string avatar_url   = 3;
+    string display_name = 4;
+}
+
+// Message ...
+message Message {
+    oneof message {
+        TextMessage text_message    = 1;
+        Dialog dialog               = 2;
+    }
+}
+
+// Dialog ...
+message Dialog {
+    string title    = 1;
+}
+
+// TextMessage ...
+message TextMessage {
+    enum TextFormat {
+        PLAIN_TEXT        = 0;
+    }
+
+    enum MessageType {
+        UNKNOWN           = 0;
+        PRIVATE           = 1;
+        ROOM              = 2;
+    }
+
+    message From {
+        User user         = 1;
+    }
+
+    message To {
+         User user         = 1;
+    }
+
+    string uuid             = 1;
+    string text             = 2;
+    string raw_text         = 3;
+    string thread_id        = 4;
+    From from               = 5;
+    To to                   = 6;
+    string argument_text    = 7;
+
+    google.protobuf.Timestamp timestamp = 10;
+}

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "autobot.proto";
+import "google/api/annotations.proto";
+
+package autobot.webhook.v1;
+
+option go_package = "github.com/katallaxie/autobot/pkg/proto;proto";
+
+// Webhook ...
+service Webhook {
+    // Post ...
+    rpc Post(Post.Request) returns (Post.Response) {
+        option (google.api.http) = {
+            post: "/v1/webhook/post"
+            body: "*"
+        };
+    }
+}
+
+// Post ...
+message Post {
+    message Request {
+        autobot.events.v1.Reply reply      = 1;
+    }
+
+    message Response {}
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+import "autobot.proto";
+
+package autobot.adapter.v1;
+
+option go_package = "github.com/katallaxie/autobot/pkg/proto;proto";
+
+// Adapter ...
+service Adapter {
+    // Subscribe ...
+    rpc Subscribe(Subscribe.Request) returns (stream Subscribe.Response);
+
+    // Publish ...
+    rpc Publish(Publish.Request) returns (Publish.Response);
+}
+
+// Publish ...
+message Publish {
+    message Request {
+        autobot.events.v1.Reply reply      = 1;
+    }
+
+    message Response {
+        repeated Diagnostic diagnostic  = 10;
+    }
+}
+
+// Subribe ...
+message Subscribe {
+    enum Status {
+        UNKNOWN = 0;
+        SUCCESS = 1;
+        FAILURE = 2;
+    }
+
+    // Request ...
+    message Request {}
+
+    // Response ...
+    message Response {
+        autobot.events.v1.Event event  = 1;
+        repeated Diagnostic diagnostic  = 10;
+    }
+}
+
+// Diagnostic ...
+message Diagnostic {
+    enum Severity {
+        INVALID     = 0;
+        ERROR       = 1;
+        WARNING     = 2;
+    }
+
+    Severity severity                = 1;
+    string summary                   = 2;
+    string detail                    = 3;
+    repeated string FilePaths        = 4;
+}

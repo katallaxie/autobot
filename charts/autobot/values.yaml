@@ -1,0 +1,91 @@
+replicaCount: 1
+image:
+  repository: harbor.infra.cluster.ionos.com/paasis/autobot 
+  pullPolicy: Always
+  # defaults to the AppVersion field of the chart.
+  tag:
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  annotations: {}
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+  tokenName: "service-account-token"
+rbac:
+  create: true
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+service:
+  type: ClusterIP
+  healthPort: 8081
+resources:
+  limits:
+    cpu: 500m
+    memory: 500Mi
+  requests:
+    cpu: 250m
+    memory: 128Mi
+nodeSelector: {}
+tolerations: []
+affinity: {}
+# configurations will be placed in a configmap, which will be available as
+# environment variables to program. Options are defined  in main.go, and can be retrieved via
+# `go run . --help`
+configurations: {}
+# secret envionrment variables, similar to configuration
+# will be stored in a secret and imported via envFrom
+secrets: {}
+# env is a map of environment variables that will be set directly on the paas-event-gateway pod
+# It can be either a key-value pair directly, or be more verbose, e.g. when referencing
+# secrets
+env:
+  AUTOBOT_HANGOUT_SUBSCRIPTION: autobot
+  AUTOBOT_HANGOUT_PROJECT: project-paas-chatbot
+
+# Vault
+secretStore: vault-backend
+keyPath: paasis/data/cluster/paasis-dev/autobot
+
+# DBaaS
+dbaas:
+  providerConfigRef: paas-crossplane-provider-config
+  username: bootstrap
+  password: kVmRGYkDTcPfjEdWXVRTSjuCR
+  datacenter: 45d3189f-9ee2-45fc-8f4b-7758689b65ba
+  location: de/fra
+  lanId: 3
+
+# KEY:
+#   valueFrom:
+#     configMapKeyRef:
+#       ...
+
+# When monitoring is enabled a `PodMonitor` is deployed (requires Prometheus operator)
+monitoring:
+  enabled: true
+
+container:
+  args:
+    - --adapter
+    - /autobot-hangouts
+
+livenessProbe:
+  enabled: false
+readinessProbe:
+  enabled: true
+
+# createPullSecrets can be used to create imagepullsecrets
+createPullSecrets: []
+#   dockerconfigjson: '{"auths"....'
+
+# feature flags are the default feature flags to use in case
+# a contract does not have them set.
+featureFlags:
+  # restore determines whether in-place restore can be used.
+  restore: false
+# path to the client secret in the pod
+
+autobotClientCredentials: "autobot-client-secret"

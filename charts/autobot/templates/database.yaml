@@ -1,0 +1,63 @@
+---
+apiVersion: compute.ionoscloud.crossplane.io/v1alpha1
+kind: Datacenter
+metadata:
+  name: paasis-development-de-fra
+  annotations:
+    crossplane.io/external-name: {{ .Values.dbaas.datacenter }}
+spec:
+  forProvider:
+    name: paasis_development_de-fra
+    location: {{ .Values.dbaas.location }}
+  providerConfigRef:
+    name: {{ .Values.dbaas.providerConfigRef }}
+  deletionPolicy: Orphan
+---
+apiVersion: compute.ionoscloud.crossplane.io/v1alpha1
+kind: Lan
+metadata:
+  name: paasis-development-de-fra-private
+  annotations:
+    crossplane.io/external-name: "{{ .Values.dbaas.lanId }}"
+spec:
+  forProvider:
+    name: paasis-development-de-fra-private
+    public: false
+    datacenterConfig:
+      datacenterIdRef:
+        name: paasis-development-de-fra
+  providerConfigRef:
+    name: {{ .Values.dbaas.providerConfigRef }}
+  deletionPolicy: Orphan
+---
+apiVersion: dbaas.ionoscloud.crossplane.io/v1alpha1
+kind: PostgresCluster
+metadata:
+  name: autobot
+spec:
+  forProvider:
+    displayName: autobot
+    postgresVersion: "14"
+    connections:
+      - datacenterConfig:
+          datacenterIdRef:
+            name: paasis-development-de-fra
+        lanConfig:
+          lanIdRef:
+            name: paasis-development-de-fra-private
+        cidr: 10.7.226.5/24
+    credentials:
+      username: {{ .Values.dbaas.username }}
+      password: {{ .Values.dbaas.password }}
+    location: {{ .Values.dbaas.location }}
+    instances: 1
+    cores: 2
+    ram: 4096
+    storageSize: 40960
+    storageType: SSD
+    synchronizationMode: ASYNCHRONOUS
+  writeConnectionSecretToRef:
+      namespace: paasis
+      name: autobot-database-credentials
+  providerConfigRef:
+    name: {{ .Values.dbaas.providerConfigRef }}
