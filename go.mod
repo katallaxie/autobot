@@ -17,7 +17,7 @@ require (
 	github.com/hashicorp/go-hclog v1.3.1
 	github.com/hashicorp/go-plugin v1.4.5
 	github.com/katallaxie/pkg v0.0.0-20220817193938-0faa2d804a6b
-	github.com/kljensen/snowball v0.6.0
+	github.com/kljensen/snowball v0.8.0
 	github.com/nats-io/nats.go v1.18.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/scylladb/gocqlx/v2 v2.7.0
