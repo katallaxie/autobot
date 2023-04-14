@@ -32,67 +32,67 @@ var cfg *config
 
 // Event ...
 type Event struct {
-	Type      string
-	EventTime time.Time
-	Space     *Space
-	Message   *Message
+	Type      string    `json:"type"`
+	EventTime time.Time `json:"eventTime"`
+	Space     *Space    `json:"space"`
+	Message   *Message  `json:"message"`
 }
 
 // Space ...
 type Space struct {
-	Name        string
-	DisplayName string
-	Type        string
+	Name        string `json:"name"`
+	DisplayName string `json:"displayName"`
+	Type        string `json:"type"`
 }
 
 // Message ...
 type Message struct {
-	Name         string
-	CreateTime   time.Time
-	Text         string
-	ArgumentText string
-	Sender       *Sender
-	Thread       *Thread
-	Annotations  []Annotation
+	Name         string        `json:"name"`
+	CreateTime   time.Time     `json:"createTime"`
+	Text         string        `json:"text"`
+	ArgumentText string        `json:"argumentText"`
+	Sender       *Sender       `json:"sender"`
+	Thread       *Thread       `json:"thread"`
+	Annotations  []Annotation  `json:"annotations"`
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 }
 
 // SlashCommand ...
 type SlashCommand struct {
-	Bot         *Bot
-	CommandId   string
-	CommandName string
-	Type        string
+	Bot         *Bot   `json:"bot"`
+	CommandId   string `json:"commandId"`
+	CommandName string `json:"commandName"`
+	Type        string `json:"type"`
 }
 
 // Bot ...
 type Bot struct {
-	Name        string
-	DisplayName string
-	AvatarUrl   string
-	Type        string
+	Name        string `json:"name"`
+	DisplayName string `json:"displayName"`
+	AvatarUrl   string `json:"avatarUrl"`
+	Type        string `json:"type"`
 }
 
 // Sender ...
 type Sender struct {
-	Name        string
-	DisplayName string
-	AvatarUrl   string
-	Email       string
+	Name        string `json:"name"`
+	DisplayName string `json:"displayName"`
+	AvatarUrl   string `json:"avatarUrl"`
+	Email       string `json:"email"`
 }
 
 // Thread ...
 type Thread struct {
-	Name string
+	Name string `json:"name"`
 }
 
 // Annotation ...
 type Annotation struct {
-	Length       int
-	StartIndex   int
-	Type         string
-	UserMention  *UserMention
-	SlashCommand *SlashCommand
+	Length       int           `json:"length"`
+	StartIndex   int           `json:"startIndex"`
+	Type         string        `json:"type"`
+	UserMention  *UserMention  `json:"userMention,omitempty"`
+	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
 }
 
 // UserMention ...

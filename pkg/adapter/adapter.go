@@ -129,7 +129,7 @@ func adapterFactory(ctx context.Context, meta *Meta) Factory {
 		cfg := &p.ClientConfig{
 			AllowedProtocols: []p.Protocol{p.ProtocolGRPC},
 			AutoMTLS:         enablePluginAutoMTLS,
-			Cmd:              exec.CommandContext(ctx, f, meta.Arguments...), // #nosec
+			Cmd:              exec.CommandContext(ctx, f, meta.Arguments...), //nolint:gosec
 			HandshakeConfig:  Handshake,
 			Logger:           l,
 			Managed:          true,

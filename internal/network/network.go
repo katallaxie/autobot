@@ -18,14 +18,14 @@ import (
 // Network contains the Layers, Weights, Biases of a neural network then the actual output values
 // and the learning rate.
 type Network struct {
-	Layers  []Matrix
-	Weights []Matrix
-	Biases  []Matrix
-	Output  Matrix
-	Rate    float64
-	Errors  []float64
-	Time    float64
-	Locale  string
+	Layers  []Matrix  `json:"layers"`
+	Weights []Matrix  `json:"weights"`
+	Biases  []Matrix  `json:"biases"`
+	Output  Matrix    `json:"output"`
+	Rate    float64   `json:"rate"`
+	Errors  []float64 `json:"errors"`
+	Time    float64   `json:"time"`
+	Locale  string    `json:"locale"`
 }
 
 // LoadNetwork returns a Network from a specified file
