@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go/pubsub v1.25.1
 	github.com/caarlos0/env v3.5.0+incompatible
 	github.com/caarlos0/env/v6 v6.10.1
-	github.com/gocql/gocql v1.2.1
+	github.com/gocql/gocql v1.4.0
 	github.com/gofiber/fiber/v2 v2.38.1
 	github.com/gofiber/template v1.7.1
 	github.com/golang/mock v1.6.0
