@@ -18,7 +18,7 @@ require (
 	github.com/hashicorp/go-plugin v1.4.5
 	github.com/katallaxie/pkg v0.0.0-20220817193938-0faa2d804a6b
 	github.com/kljensen/snowball v0.6.0
-	github.com/nats-io/nats.go v1.18.0
+	github.com/nats-io/nats.go v1.26.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/scylladb/gocqlx/v2 v2.7.0
 	github.com/soudy/mathcat v0.0.0-20201027222343-588f3d377cb9
@@ -131,7 +131,7 @@ require (
 	github.com/kisielk/errcheck v1.6.3 // indirect
 	github.com/kisielk/gotool v1.0.0 // indirect
 	github.com/kkHAIKE/contextcheck v1.1.4 // indirect
-	github.com/klauspost/compress v1.15.11 // indirect
+	github.com/klauspost/compress v1.16.5 // indirect
 	github.com/kulti/thelper v0.6.3 // indirect
 	github.com/kunwardeep/paralleltest v1.0.6 // indirect
 	github.com/kyoh86/exportloopref v0.1.11 // indirect
@@ -155,7 +155,7 @@ require (
 	github.com/moricho/tparallel v0.3.1 // indirect
 	github.com/nakabonne/nestif v0.3.1 // indirect
 	github.com/nats-io/nats-server/v2 v2.9.3 // indirect
-	github.com/nats-io/nkeys v0.3.0 // indirect
+	github.com/nats-io/nkeys v0.4.4 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/nbutton23/zxcvbn-go v0.0.0-20210217022336-fa2cb2858354 // indirect
 	github.com/nishanths/exhaustive v0.9.5 // indirect
@@ -218,7 +218,7 @@ require (
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/exp v0.0.0-20220909182711-5c715a9e8561 // indirect
 	golang.org/x/exp/typeparams v0.0.0-20230224173230-c95f2b4c22f2 // indirect
 	golang.org/x/net v0.9.0 // indirect
