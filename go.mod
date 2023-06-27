@@ -33,7 +33,7 @@ require (
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c
 	google.golang.org/grpc v1.50.1
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.1.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.31.0
 	gopkg.in/cheggaaa/pb.v1 v1.0.28
 	helm.sh/helm v2.17.0+incompatible
 	mvdan.cc/gofumpt v0.5.0
